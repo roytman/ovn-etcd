@@ -7,12 +7,8 @@ import (
 	"os"
 )
 
-type Reply struct {
-	Data string
-}
-
 func main() {
-	client, err := jsonrpc.Dial("tcp", "10.100.102.10:12345")
+	client, err := jsonrpc.Dial("tcp", "0.0.0.0:12345")
 	//Only change this
 	if err != nil {
 		log.Fatal(err)
@@ -23,11 +19,11 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		var reply Reply
-		err = client.Call("get_schema", "test", &reply)
+		var reply *string
+		err = client.Call("get_schema", "_Server", &reply)
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Printf("Reply: %v, Data: %v", reply, reply.Data)
+		log.Printf("Reply: %v", *reply)
 	}
 }
